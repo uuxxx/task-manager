@@ -1,0 +1,62 @@
+<mat-drawer-container class="drawer">
+  <mat-drawer class="sidebar" mode="side" opened>
+    <mat-list>
+      <mat-list-item matListItemTitle>
+        <div class="title">
+          <h4>LISTS</h4>
+          <button
+            (click)="openCreateListDialog()"
+            mat-mini-fab
+            color="primary"
+            aria-label="add list"
+          >
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+      </mat-list-item>
+
+      <mat-list-item>
+        <button routerLink="table" style="width: 100%" mat-flat-button>
+          All Tasks
+        </button>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+
+      @for (list of lists | async; track list.id) {
+      <mat-list-item>
+        <button
+          (click)="changeOpenedCategory(list.id)"
+          style="width: 100%"
+          mat-flat-button
+          [color]="list.id === openedCategoryID ? 'accent' : ''"
+        >
+          {{ list.name }}
+        </button>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      }
+    </mat-list>
+  </mat-drawer>
+  <mat-drawer-content>
+    <mat-list>
+      <mat-list-item matListItemTitle>
+        <div class="title">
+          <span>TASKS</span>
+          <button
+            [disabled]="!openedCategoryID"
+            (click)="openCreateTaskDialog()"
+            mat-mini-fab
+            color="primary"
+            aria-label="add list"
+          >
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+      </mat-list-item>
+
+      @for (task of tasks | async; track task.id) {
+      <tasks-task [task]="task"></tasks-task>
+      }
+    </mat-list>
+  </mat-drawer-content>
+</mat-drawer-container>

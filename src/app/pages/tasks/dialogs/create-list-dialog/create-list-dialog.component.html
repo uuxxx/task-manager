@@ -1,0 +1,17 @@
+<mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Enter name</mat-label>
+    <input [(ngModel)]="listName" matInput placeholder="Todo App" />
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button
+    (click)="createNewList()"
+    style="margin: 0 auto"
+    [disabled]="!listName"
+    mat-button
+  >
+    Create
+  </button>
+</mat-dialog-actions>

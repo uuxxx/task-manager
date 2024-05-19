@@ -1,0 +1,10 @@
+$header-heaight: 0;
+
+main {
+  margin: 0 auto;
+  max-width: 1200px;
+  height: 100vh - $header-heaight;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

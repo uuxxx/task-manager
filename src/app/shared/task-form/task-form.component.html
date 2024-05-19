@@ -1,0 +1,70 @@
+<form [formGroup]="formGroup" (ngSubmit)="formSubmit()" class="form-container">
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input matInput formControlName="title" />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Description</mat-label>
+    <textarea matInput formControlName="description"></textarea>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Deadline</mat-label>
+    <input
+      [min]="today"
+      matInput
+      [matDatepicker]="picker"
+      formControlName="deadline"
+    />
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Priority</mat-label>
+    <mat-select formControlName="priority">
+      @for (item of priorities; track item) {
+      <mat-option [value]="item">{{ item }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Status</mat-label>
+    <mat-select formControlName="status">
+      @for (item of statuses; track item) {
+      <mat-option [value]="item">{{ item }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Assignees</mat-label>
+    <mat-chip-grid #chipGrid aria-label="Enter assignees">
+      @for (assignee of assignees; track assignee) {
+      <mat-chip-row
+        style="overflow: hidden"
+        (removed)="remove(assignee)"
+        [editable]="true"
+        (edited)="edit(assignee, $event)"
+        [aria-description]="'press enter to edit ' + assignee"
+      >
+        {{ assignee }}
+        <button matChipRemove [attr.aria-label]="'remove ' + assignee">
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </mat-chip-row>
+      }
+      <input
+        placeholder="New..."
+        [matChipInputFor]="chipGrid"
+        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+        [matChipInputAddOnBlur]="addOnBlur"
+        (matChipInputTokenEnd)="add($event)"
+      />
+    </mat-chip-grid>
+  </mat-form-field>
+
+  <button [disabled]="!formGroup.valid" mat-button>submit</button>
+</form>

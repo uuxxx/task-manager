@@ -1,0 +1,17 @@
+<mat-list-item style="margin-top: 10px">
+  <mat-card [routerLink]="task.id" style="cursor: pointer">
+    <mat-card-content>
+      <div class="card-content">
+        <div class="card-title">{{ task.title }}</div>
+        <div>
+          <button (click)="openEditTaskDialog($event)" mat-icon-button>
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button (click)="deleteTask($event)" mat-icon-button>
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</mat-list-item>

@@ -1,0 +1,43 @@
+<form [formGroup]="formGroup" class="form">
+  <h3 class="title">Filters:</h3>
+
+  <mat-form-field>
+    <mat-label>Status</mat-label>
+    <mat-select formControlName="status">
+      <mat-option>None</mat-option>
+      @for (status of statuses; track status) {
+      <mat-option [value]="status">{{ status }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Deadline</mat-label>
+    <mat-date-range-input formGroupName="deadline" [rangePicker]="picker">
+      <input matStartDate formControlName="start" placeholder="Start date" />
+      <input matEndDate formControlName="end" placeholder="End date" />
+    </mat-date-range-input>
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-date-range-picker #picker></mat-date-range-picker>
+
+    @if (formGroup.controls.deadline.hasError('matStartDateInvalid')) {
+    <mat-error>Invalid start date</mat-error>
+    } @if (formGroup.controls.deadline.hasError('matEndDateInvalid')) {
+    <mat-error>Invalid end date</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Assignee</mat-label>
+    <input matInput placeholder="Andrew" formControlName="assignee" />
+  </mat-form-field>
+
+  <button
+    (click)="submitForm()"
+    [disabled]="isApplyDisabled"
+    mat-flat-button
+    color="primary"
+  >
+    apply
+  </button>
+</form>

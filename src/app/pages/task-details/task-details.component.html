@@ -1,0 +1,64 @@
+<mat-card>
+  <mat-card-content
+    style="color: white; min-width: 250px; max-width: 500px; max-height: 500px"
+  >
+    @if (task) {
+    <h3>{{ task.title }}</h3>
+    <mat-list>
+      <mat-list-item>
+        <span matListItemTitle>Created at:</span>
+        <span matListItemLine>{{ task.creationTS | date }}</span>
+      </mat-list-item>
+      <mat-list-item>
+        <span matListItemTitle>Description: </span>
+        @if(task.description) {
+        <p matListItemLine>{{ task.description }}</p>
+        } @else {
+        <p matListItemLine>No description</p>
+        }
+      </mat-list-item>
+      <mat-list-item>
+        <span matListItemTitle>Deadline:</span>
+        <span matListItemLine>{{ task.deadline | date }}</span>
+      </mat-list-item>
+      <mat-list-item>
+        <span matListItemTitle>Priority:</span>
+        <span matListItemLine>{{ task.priority | titlecase }}</span>
+      </mat-list-item>
+
+      <mat-list-item>
+        <span matListItemTitle>Status:</span>
+        <span matListItemLine>{{ task.status | titlecase }}</span>
+      </mat-list-item>
+
+      <mat-list-item>
+        <button mat-button [matMenuTriggerFor]="aboveMenu">
+          Open assignees
+        </button>
+        <mat-menu #aboveMenu="matMenu" class="assignees-menu">
+          @if (!task.assignees.length) {
+          <button mat-menu-item>No assignees</button>
+          } @for (assignee of task.assignees; track assignee) {
+          <button mat-menu-item>{{ assignee }}</button>
+          }
+        </mat-menu>
+      </mat-list-item>
+    </mat-list>
+
+    } @else {
+    <div style="font-size: 20px; margin-bottom: 20px">
+      Such task doesn't exist
+    </div>
+    }
+  </mat-card-content>
+
+  <mat-card-actions>
+    <button
+      routerLink="../"
+      style="margin: 0 auto; width: fit-content"
+      mat-flat-button
+    >
+      To home page
+    </button>
+  </mat-card-actions>
+</mat-card>
