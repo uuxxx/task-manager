@@ -1,5 +1,10 @@
-<mat-drawer-container class="drawer">
-  <mat-drawer class="sidebar" mode="side" opened>
+<mat-sidenav-container class="drawer">
+  <mat-sidenav
+    class="sidebar"
+    #snav
+    [mode]="mobileQuery.matches ? 'over' : 'side'"
+    opened
+  >
     <mat-list>
       <mat-list-item matListItemTitle>
         <div class="title">
@@ -36,11 +41,16 @@
       <mat-divider></mat-divider>
       }
     </mat-list>
-  </mat-drawer>
-  <mat-drawer-content>
+  </mat-sidenav>
+  <mat-sidenav-content>
     <mat-list>
       <mat-list-item matListItemTitle>
         <div class="title">
+          <button mat-icon-button (click)="snav.toggle()">
+            <mat-icon>
+              @if (snav.opened) { chevron_left } @else {chevron_right}
+            </mat-icon>
+          </button>
           <span>TASKS</span>
           <button
             [disabled]="!openedCategoryID"
@@ -58,5 +68,5 @@
       <tasks-task [task]="task"></tasks-task>
       }
     </mat-list>
-  </mat-drawer-content>
-</mat-drawer-container>
+  </mat-sidenav-content>
+</mat-sidenav-container>

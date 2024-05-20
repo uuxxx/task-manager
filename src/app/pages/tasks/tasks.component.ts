@@ -1,5 +1,6 @@
+import { MediaMatcher } from '@angular/cdk/layout';
 import { AsyncPipe } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDivider } from '@angular/material/divider';
@@ -34,6 +35,15 @@ import { Store } from '@ngrx/store';
   styleUrl: './tasks.component.scss',
 })
 export class TasksComponent {
+  mobileQuery: MediaQueryList;
+  private _mobileQueryListener: () => void;
+
+  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
+    this.mobileQuery = media.matchMedia('(max-width: 600px)');
+    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+    this.mobileQuery.onchange = this._mobileQueryListener;
+  }
+
   private readonly store = inject(Store);
   public dialog = inject(MatDialog);
 
